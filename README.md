@@ -10,7 +10,7 @@ A simple C++ utility to automatically extract color and grayscale patches. Initi
 
 ## Requirements
 - Windows system (tested on Windows 10)
-- OpenCV (v= 3.3)
+- OpenCV (>= 3.3)
 - CMake (>= 2.8)
 
 ## To Do
