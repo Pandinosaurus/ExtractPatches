@@ -3,7 +3,10 @@
 #include "../headers/headers.hpp"
 #include "../headers/globalvar.hpp"
 
-void extractPatches(cv::Mat img, std::string savePath, std::string imgType = "jpg", int granularity = GRANULARITY_DEFAULT, int imgNb = UNSET_INT, int step = UNSET_INT)
+void extractPatches(const cv::Mat& img, const std::string& savePath, const std::string& imgType = "jpg", 
+                    const int& granularity = GRANULARITY_DEFAULT, 
+                    const int& imgNb = UNSET_INT, 
+                    int step = UNSET_INT)
 {
     CreateDirectory(savePath.c_str, NULL);
 
@@ -16,6 +19,7 @@ void extractPatches(cv::Mat img, std::string savePath, std::string imgType = "jp
             std::string colstr = std::to_string(col);
             std::string rowstr = std::to_string(row);
             cv::Rect roi(col, row, granularity, granularity);
+
             cv::imwrite(savePath + 
                         imNbstr + "_" + rowstr + "x" + colstr + "." + imgType,
                         img(roi));
@@ -23,11 +27,11 @@ void extractPatches(cv::Mat img, std::string savePath, std::string imgType = "jp
     }
 }
 
-void extractPatchesWithGT(cv::Mat img, std::string savePathImg, std::string imgType,
-                          cv::Mat gt, std::string savePathGt, std::string gtType,
-                          int mode = ExtractWithGTModes::AllPixel,
-                          int imgNb = UNSET_INT,
-                          int granularity = GRANULARITY_DEFAULT, 
+void extractPatchesWithGT(const cv::Mat& img, const std::string& savePathImg, const std::string& imgType,
+                          const cv::Mat& gt, const std::string& savePathGt, const std::string& gtType,
+                          const int& mode = ExtractWithGTModes::AllPixel,
+                          const int& imgNb = UNSET_INT,
+                          const int& granularity = GRANULARITY_DEFAULT, 
                           int step = UNSET_INT)
 {
     std::vector<cv::Scalar> vectorOfColors;
@@ -65,7 +69,8 @@ void extractPatchesWithGT(cv::Mat img, std::string savePathImg, std::string imgT
         }
     }
 }
-bool checkOnExtractWithGTMode(cv::Mat gt, cv::Scalar& color, int mode = ExtractWithGTModes::AllPixel)
+
+bool checkOnExtractWithGTMode(const cv::Mat& gt, cv::Scalar& color, const int& mode = ExtractWithGTModes::AllPixel)
 {
     gt.convertTo(gt, CV_8U); //unsigned char - 0...255
 
@@ -83,18 +88,16 @@ bool checkOnExtractWithGTMode(cv::Mat gt, cv::Scalar& color, int mode = ExtractW
                 }
             }
             break;
-
         case ExtractWithGTModes::CentralPixel:
             color = gt.at<uchar>(int(gt.rows/2), int(gt.cols/2));
             break;
-        
         default: 
             break;
     }
     return true;
 }
 
-std::string scalarToString(cv::Scalar scalar)
+std::string scalarToString(const cv::Scalar& scalar)
 {
     std::string str = "";
     switch (scalar.channels)
@@ -103,7 +106,7 @@ std::string scalarToString(cv::Scalar scalar)
             int a = scalar[0]; 
             int b = scalar[1]; 
             int c = scalar[2];
-            str = std::to_string(a) + std::to_string(b) + std::to_string(c);
+            str = std::to_string(a) + "_" + std::to_string(b) + "_"+ std::to_string(c);
             break;
         case 1:
             int a = scalar[0];
@@ -115,7 +118,9 @@ std::string scalarToString(cv::Scalar scalar)
     return str;
 }
 
-bool scalarDirAlreadyCreated(std::vector<cv::Scalar> scalarVec, cv::Scalar scalar)
+bool scalarDirAlreadyCreated(const std::vector<cv::Scalar>& scalarVec,const cv::Scalar& scalar)
 {
-
+    for (auto s : scalarVec)
+        if (s == scalar) return true;
+    return false;
 }
