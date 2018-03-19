@@ -1,0 +1,6 @@
+#exclude data
+data/*
+./data/*
+#exclude build
+build/
+./build/*

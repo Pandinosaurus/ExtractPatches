@@ -7,8 +7,8 @@
 void getPatchesFromGrayscaleData(std::string grayscaleImagesPath, std::string imagesType)
 {
     //Get directory
-    auto savePathTestGray = "../data/outputGrayGray/";
-    CreateDirectory(savePathTestGray, NULL);
+    auto savePathGray = "../data/outputGrayGray/";
+    CreateDirectory(savePathGray, NULL);
 
     //Get images
     std::vector<cv::String> imgPathsVec;
@@ -19,8 +19,8 @@ void getPatchesFromGrayscaleData(std::string grayscaleImagesPath, std::string im
     for (auto imgPath : imgPathsVec)
     {
         std::cout << imgPath << std::endl;
-        cv::Mat imgTestGray = cv::imread(imgPath, 0);
-        extractPatches(imgTestGray, savePathTestGray, imagesType, GRANULARITY_DEFAULT, imgNb);
-        imgTestGray.release();
+        cv::Mat imgGray = cv::imread(imgPath, 0);
+        extractPatches(imgGray, savePathGray, imagesType, GRANULARITY_DEFAULT, imgNb);
+        imgGray.release();
     }
 }

@@ -1,5 +1,5 @@
 #include "headers/headers.hpp"
-#include "functions/getpatchesfromgraydata.hpp"
+#include "functions/getpatchesfromgrayscaledata.hpp"
 #include "functions/getpatchesfromcolordata.hpp"
 
 int main(int argc, char *argv[])
