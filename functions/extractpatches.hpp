@@ -16,7 +16,9 @@ void extractPatches(cv::Mat img, std::string savePath, std::string imgType = "jp
             std::string colstr = std::to_string(col);
             std::string rowstr = std::to_string(row);
             cv::Rect roi(col, row, granularity, granularity);
-            cv::imwrite(savePath + imNbstr + "_" + rowstr + "x" + colstr + "." + imgType, img(roi));
+            cv::imwrite(savePath + 
+                        imNbstr + "_" + rowstr + "x" + colstr + "." + imgType,
+                        img(roi));
         }
     }
 }
@@ -41,14 +43,24 @@ void extractPatchesWithGT(cv::Mat img, std::string savePathImg, std::string imgT
             cv::Scalar color;
             if (checkOnExtractWithGTMode(gt, color, mode)) 
             {
+                //Simplify notation
+                std::string currSavePathImg = savePathImg.c_str + "/" + scalarToString(color) + "/";
+                std::string currSavePathGt = savePathGt.c_str + "/" + scalarToString(color) + "/";
 
-                if (!scalarDirAlreadyCreated(vectorOfColors, color)) {
+                //Create directory if necessary
+                if (!scalarDirAlreadyCreated(vectorOfColors, color)) 
+                {
                     vectorOfColors.push_back(color);
-                    CreateDirectory(savePathImg.c_str+"/"+scalarToString(color), NULL);
-                    CreateDirectory(savePathGt.c_str + "/" + scalarToString(color), NULL);
+                    CreateDirectory(currSavePathImg.c_str, NULL);
+                    CreateDirectory(currSavePathGt.c_str, NULL);
                 }
-                cv::imwrite(savePathImg + "/" + scalarToString(color) + imNbstr + "_" + rowstr + "x" + colstr + "." + imgType, img(roi));
-                cv::imwrite(savePathGt + "/" + scalarToString(color) + imNbstr + "_" + rowstr + "x" + colstr + "." + gtType, gt(roi));
+
+                cv::imwrite(currSavePathImg + 
+                            imNbstr + "_" + rowstr + "x" + colstr + "." + imgType, 
+                            img(roi));
+                cv::imwrite(currSavePathImg +
+                            imNbstr + "_" + rowstr + "x" + colstr + "." + gtType,
+                            gt(roi));
             }
         }
     }
