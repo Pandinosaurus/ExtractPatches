@@ -3,28 +3,66 @@
 #include "../headers/headers.hpp"
 #include "../headers/globalvar.hpp"
 
-void extractPatches(const cv::Mat& img, const std::string& savePath, const std::string& imgType = "jpg", 
-                    const int& granularity = GRANULARITY_DEFAULT, 
-                    const int& imgNb = UNSET_INT, 
-                    int step = UNSET_INT)
+bool checkOnExtractWithGTMode(const cv::Mat& gtroi, cv::Scalar& color, const int& mode = ExtractWithGTModes::AllPixel)
 {
-    CreateDirectory(savePath.c_str, NULL);
+    gt.convertTo(gt, CV_8UC3); //unsigned char - 0...255
 
-    if (step == UNSET_INT) step = granularity;
-    for (int row = 0; row < img.rows - granularity; row += step)
+    uint8_t* pixelPtr = (uint8_t*)gt.data;
+    int cn = gt.channels();
+    cv::Scalar curr;
+
+    switch (mode)
     {
-        for (int col = 0; col < img.cols - granularity; col += step)
+    case ExtractWithGTModes::AllPixel:
+        for (int row = 0; row < gt.rows; row++)
         {
-            std::string imNbstr = std::to_string(imgNb);
-            std::string colstr = std::to_string(col);
-            std::string rowstr = std::to_string(row);
-            cv::Rect roi(col, row, granularity, granularity);
-
-            cv::imwrite(savePath + 
-                        imNbstr + "_" + rowstr + "x" + colstr + "." + imgType,
-                        img(roi));
+            for (int col = 0; col < gt.cols; col++)
+            {
+                if (row + col == 0) 
+                {
+                    color.val[0] = pixelPtr[row*gt.cols*cn + col*cn + 0]; // B
+                    color.val[1] = pixelPtr[row*gt.cols*cn + col*cn + 1]; // G
+                    color.val[2] = pixelPtr[row*gt.cols*cn + col*cn + 2]; // R
+                }
+                curr.val[0] = pixelPtr[row*gt.cols*cn + col*cn + 0]; // B
+                curr.val[1] = pixelPtr[row*gt.cols*cn + col*cn + 1]; // G
+                curr.val[2] = pixelPtr[row*gt.cols*cn + col*cn + 2]; // R
+                if (curr != color) return false;
+            }
         }
+        break;
+    case ExtractWithGTModes::CentralPixel:
+        color = gt.at<uchar>(int(gt.rows / 2), int(gt.cols / 2));
+        break;
     }
+    return true;
+}
+
+std::string scalarToString(const cv::Scalar& scalar)
+{
+    std::string str = "";
+    int a, b, c;
+    switch (scalar.channels)
+    {
+    case 3:
+        a = scalar[0];
+        b = scalar[1];
+        c = scalar[2];
+        str = std::to_string(a) + "_" + std::to_string(b) + "_" + std::to_string(c);
+        break;
+    case 1:
+        a = scalar[0];
+        str = std::to_string(a);
+        break;
+    }
+    return str;
+}
+
+bool scalarDirAlreadyCreated(const std::vector<cv::Scalar>& scalarVec, const cv::Scalar& scalar)
+{
+    for (auto s : scalarVec)
+        if (s == scalar) return true;
+    return false;
 }
 
 void extractPatchesWithGT(const cv::Mat& img, const std::string& savePathImg, const std::string& imgType,
@@ -45,18 +83,18 @@ void extractPatchesWithGT(const cv::Mat& img, const std::string& savePathImg, co
             std::string rowstr = std::to_string(row);
             cv::Rect roi(col, row, granularity, granularity);
             cv::Scalar color;
-            if (checkOnExtractWithGTMode(gt, color, mode)) 
+            if (checkOnExtractWithGTMode(gt(roi), color, mode)) 
             {
                 //Simplify notation
-                std::string currSavePathImg = savePathImg.c_str + "/" + scalarToString(color) + "/";
-                std::string currSavePathGt = savePathGt.c_str + "/" + scalarToString(color) + "/";
+                std::string currSavePathImg = savePathImg + "/" + scalarToString(color) + "/";
+                std::string currSavePathGt = savePathGt + "/" + scalarToString(color) + "/";
 
                 //Create directory if necessary
                 if (!scalarDirAlreadyCreated(vectorOfColors, color)) 
                 {
                     vectorOfColors.push_back(color);
-                    CreateDirectory(currSavePathImg.c_str, NULL);
-                    CreateDirectory(currSavePathGt.c_str, NULL);
+                    CreateDirectory(currSavePathImg.c_str(), NULL);
+                    CreateDirectory(currSavePathGt.c_str(), NULL);
                 }
 
                 cv::imwrite(currSavePathImg + 
@@ -70,57 +108,26 @@ void extractPatchesWithGT(const cv::Mat& img, const std::string& savePathImg, co
     }
 }
 
-bool checkOnExtractWithGTMode(const cv::Mat& gt, cv::Scalar& color, const int& mode = ExtractWithGTModes::AllPixel)
+void extractPatches(const cv::Mat& img, const std::string& savePath, const std::string& imgType = "jpg",
+    const int& granularity = GRANULARITY_DEFAULT,
+    const int& imgNb = UNSET_INT,
+    int step = UNSET_INT)
 {
-    gt.convertTo(gt, CV_8U); //unsigned char - 0...255
+    CreateDirectory(savePath.c_str(), NULL);
 
-    switch (mode)
+    if (step == UNSET_INT) step = granularity;
+    for (int row = 0; row < img.rows - granularity; row += step)
     {
-        case ExtractWithGTModes::AllPixel:
-            cv::Scalar curr;
-            for (int row; row < gt.rows; row++)
-            {
-                for (int col; col < gt.cols; col++)
-                {
-                    if (row + col == 0) color = gt.at<uchar>(row, col);
-                    curr = gt.at<uchar>(row, col);
-                    if (curr != color) return false;
-                }
-            }
-            break;
-        case ExtractWithGTModes::CentralPixel:
-            color = gt.at<uchar>(int(gt.rows/2), int(gt.cols/2));
-            break;
-        default: 
-            break;
-    }
-    return true;
-}
+        for (int col = 0; col < img.cols - granularity; col += step)
+        {
+            std::string imNbstr = std::to_string(imgNb);
+            std::string colstr = std::to_string(col);
+            std::string rowstr = std::to_string(row);
+            cv::Rect roi(col, row, granularity, granularity);
 
-std::string scalarToString(const cv::Scalar& scalar)
-{
-    std::string str = "";
-    switch (scalar.channels)
-    {
-        case 3:
-            int a = scalar[0]; 
-            int b = scalar[1]; 
-            int c = scalar[2];
-            str = std::to_string(a) + "_" + std::to_string(b) + "_"+ std::to_string(c);
-            break;
-        case 1:
-            int a = scalar[0];
-            str = std::to_string(a);
-            break;
-        default:
-            break;
+            cv::imwrite(savePath +
+                imNbstr + "_" + rowstr + "x" + colstr + "." + imgType,
+                img(roi));
+        }
     }
-    return str;
-}
-
-bool scalarDirAlreadyCreated(const std::vector<cv::Scalar>& scalarVec,const cv::Scalar& scalar)
-{
-    for (auto s : scalarVec)
-        if (s == scalar) return true;
-    return false;
 }
