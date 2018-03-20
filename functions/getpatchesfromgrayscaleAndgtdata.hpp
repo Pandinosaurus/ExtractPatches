@@ -8,8 +8,8 @@ void getPatchesFromGrayscaleAndGTData(std::string grayscaleImagesPath, std::stri
                                  std::string groundTruthImagesPath, std::string groundTruthImagesType)
 {
     //Get directories
-    auto savePathGray = "../data/outputGrayGTGray/";
-    auto savePathGT = "../data/outputGrayGTGT/";
+    auto savePathGray = "../data/outputGrayGTGray";
+    auto savePathGT = "../data/outputGrayGTGT";
 
     //Get images
     std::vector<cv::String> imgGrayPathsVec;
