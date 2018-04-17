@@ -3,13 +3,15 @@
 #include "headers.hpp"
 
 int UNSET_INT = -1;
-int GRANULARITY_DEFAULT = 30;
-int STEP_DIV = 1;
+int GRANULARITY_DEFAULT = 512;
+int STEP_DIV = 4;
 int STEP_ = GRANULARITY_DEFAULT / STEP_DIV;
 double OVERLAP_ = 100-(STEP_ / GRANULARITY_DEFAULT) * 100;
 bool GRAY_DATA = false;
 bool COLOR_DATA = false;
-bool GRAY_WITHCOLORGT_DATA = true;
+bool GRAY_WITHCOLORGT_DATA = false;
+bool DETERMINE_TYPE_ALONE = true;
+std::string SAVE_TYPE = "png";
 
 enum ExtractWithGTModes 
 {
