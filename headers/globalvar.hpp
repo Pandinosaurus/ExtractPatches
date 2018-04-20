@@ -17,6 +17,7 @@ int STEP_ = GRANULARITY_DEFAULT / STEP_DIV;
 double OVERLAP_ = 100-(STEP_ / GRANULARITY_DEFAULT) * 100;
 bool GRAY_DATA = false;
 bool COLOR_DATA = true;
+bool COLOR_DATA_ONLY = true;
 bool GRAY_WITHCOLORGT_DATA = false;
 bool DETERMINE_TYPE_ALONE_SUBFOLDERS = false;
 std::string SAVE_TYPE = "png";

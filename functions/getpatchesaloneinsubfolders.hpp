@@ -34,22 +34,19 @@ void getPatchesAloneInSubfolders(std::string imagesRootPath, std::string imagesT
     {
         std::cout << imgPath << std::endl;
         cv::Mat img = cv::imread(imgPath, CV_LOAD_IMAGE_COLOR);
-        if (img.rows > 3000 && img.cols > 3000)
+        if (isColor(img))
         {
-            cv::Mat roi = img(cv::Rect(1000, 1000, img.cols - 1000, img.rows - 1000)); //allocate & clone roi
-            if (isColor(roi))
-            {
-                std::cout << "Image in color" << std::endl;
-                extractPatches(roi, savePathColorColor, saveType, GRANULARITY_DEFAULT, imgNb, STEP_);
-                cv::cvtColor(roi, roi, CV_BGR2GRAY);
-                extractPatches(roi, savePathColorGray, saveType, GRANULARITY_DEFAULT, imgNb, STEP_);
+            std::cout << "Image in color" << std::endl;
+            extractPatches(img, savePathColorColor, saveType, GRANULARITY_DEFAULT, imgNb, STEP_);
+            if (!COLOR_DATA_ONLY) {
+                cv::cvtColor(img, img, CV_BGR2GRAY);
+                extractPatches(img, savePathColorGray, saveType, GRANULARITY_DEFAULT, imgNb, STEP_);
             }
-            else
-            {
-                std::cout << "Image not in color" << std::endl;
-                extractPatches(roi, savePathGrayGray, saveType, GRANULARITY_DEFAULT, imgNb);
-            }
-            roi.release();
+        }
+        else //image is in grayscale
+        {
+            std::cout << "Image not in color" << std::endl;
+            extractPatches(img, savePathGrayGray, saveType, GRANULARITY_DEFAULT, imgNb);
         }
         img.release();
         imgNb++;

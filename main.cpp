@@ -1,3 +1,11 @@
+/* main.cpp
+ * 
+ * Author: Rémi Ratajczak
+ * Email : remi.ratajczak@gmail.com
+ * LICENSE : MIT
+ *
+*/
+
 #include "headers/headers.hpp"
 #include "functions/getpatchesfromgrayscaledata.hpp"
 #include "functions/getpatchesfromcolordata.hpp"

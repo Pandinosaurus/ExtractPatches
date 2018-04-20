@@ -29,13 +29,15 @@ void getPatchesFromColorData(std::string colorImagesPath, std::string imagesType
     int imgNb = 0;
     for (auto imgPath : imgPathsVec)
     {
-        cv::Mat imgBgr = cv::imread(imgPath, 1);
+        cv::Mat imgBgr = cv::imread(imgPath, CV_LOAD_IMAGE_COLOR);
         extractPatches(imgBgr, savePathColorColor, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
         imgBgr.release();
 
-        cv::Mat imgGray = cv::imread(imgPath, 0);
-        extractPatches(imgGray, savePathColorGray, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
-        imgGray.release();
-        imgNb++;
+        if (!COLOR_DATA_ONLY) {
+            cv::Mat imgGray = cv::imread(imgPath, CV_LOAD_IMAGE_GRAYSCALE);
+            extractPatches(imgGray, savePathColorGray, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
+            imgGray.release();
+            imgNb++;
+        }
     }
 }

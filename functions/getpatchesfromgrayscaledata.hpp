@@ -27,7 +27,7 @@ void getPatchesFromGrayscaleData(std::string grayscaleImagesPath, std::string im
     for (auto imgPath : imgPathsVec)
     {
         std::cout << imgPath << std::endl;
-        cv::Mat imgGray = cv::imread(imgPath, 0);
+        cv::Mat imgGray = cv::imread(imgPath, CV_LOAD_IMAGE_GRAYSCALE);
         extractPatches(imgGray, savePathGrayGray, imagesType, GRANULARITY_DEFAULT, imgNb);
         imgGray.release();
         imgNb++;
