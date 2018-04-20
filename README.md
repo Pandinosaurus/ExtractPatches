@@ -15,8 +15,16 @@ A simple C++ utility to automatically extract color and grayscale patches. Initi
 - OpenCV (>= 3.3)
 - CMake (>= 2.8)
 
+## Optional
+ - A TSV writter for your files - it requires Python 3 with "csv", "os" and "argparse" packages
+
 ## To Do
-- Save patches according to the path used to find the data
-- Add an easy to use CLI
-- Add a choice for extacting only color patches instead of [color + calculated grayscale versions]
-- Simplify usage
+- Add an easy to use CLI for the patch extractor
+- Allow user to extract only color patches instead of [color + calculated grayscale versions]
+- Allow user to extract random patches
+- Allow user to extract only 1 patch
+- Allow user to extract from a given coordinate
+- Allow user to extract to a given coordinate
+- Allow user to extract multiscale patches (mutliscale)
+- Allow user to extract a pyramid of patches (mutliresolution)
+- Simplify usage?
