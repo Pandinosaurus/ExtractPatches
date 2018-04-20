@@ -7,8 +7,8 @@ parser = argparse.ArgumentParser(description='Write a tsv file for each file in 
 parser.add_argument('-path',
                     '--path',
                     required=False,
-                    default='./data/outputColorGray_bis',
-                    help='the path to the folder that contains the files to record (e.g. ./data/images)')
+                    default='../data/outputColorGray_bis',
+                    help='the path to the folder that contains the files to record (e.g. ../data/images)')
 parser.add_argument('-extension',
                     '--extension',
                     default='.jpg',
