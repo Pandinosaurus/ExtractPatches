@@ -32,9 +32,9 @@ void getPatchesAloneInSubfolders(std::string imagesRootPath, std::string imagesT
             if (isColor(roi))
             {
                 std::cout << "Image in color" << std::endl;
-                extractPatches(roi, savePathColorColor, saveType, GRANULARITY_DEFAULT, imgNb);
+                extractPatches(roi, savePathColorColor, saveType, GRANULARITY_DEFAULT, imgNb, STEP_);
                 cv::cvtColor(roi, roi, CV_BGR2GRAY);
-                extractPatches(roi, savePathColorGray, saveType, GRANULARITY_DEFAULT, imgNb);
+                extractPatches(roi, savePathColorGray, saveType, GRANULARITY_DEFAULT, imgNb, STEP_);
             }
             else
             {

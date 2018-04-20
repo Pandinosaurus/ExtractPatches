@@ -7,10 +7,10 @@
 void getPatchesFromColorData(std::string colorImagesPath, std::string imagesType)
 {
     //Create folders to save the patches
-    auto savePathColor = "../data/outputColorRGB/";
-    CreateDirectory(savePathColor, NULL);
-    auto savePathGray = "../data/outputColorGray/";
-    CreateDirectory(savePathGray, NULL);
+    auto savePathColorColor = "../data/outputColorRGB_bis/colorrgb_";
+    CreateDirectory(savePathColorColor, NULL);
+    auto savePathColorGray = "../data/outputColorGray_bis/colorgray_";
+    CreateDirectory(savePathColorGray, NULL);
 
     //Get all image paths in a folder
     std::vector<cv::String> imgPathsVec;
@@ -22,11 +22,11 @@ void getPatchesFromColorData(std::string colorImagesPath, std::string imagesType
     for (auto imgPath : imgPathsVec)
     {
         cv::Mat imgBgr = cv::imread(imgPath, 1);
-        extractPatches(imgBgr, savePathColor, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
+        extractPatches(imgBgr, savePathColorColor, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
         imgBgr.release();
 
         cv::Mat imgGray = cv::imread(imgPath, 0);
-        extractPatches(imgGray, savePathGray, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
+        extractPatches(imgGray, savePathColorGray, imagesType, GRANULARITY_DEFAULT, imgNb, STEP_);
         imgGray.release();
         imgNb++;
     }

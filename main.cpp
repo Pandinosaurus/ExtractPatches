@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	if(GRAY_DATA) getPatchesFromGrayscaleData(grayscaleImagesPath, imagesType);
 	if(COLOR_DATA) getPatchesFromColorData(colorImagesPath, imagesType);
     if(GRAY_WITHCOLORGT_DATA) getPatchesFromGrayscaleAndGTData(grayscaleImagesPath, imagesType, colorGtPath, imagesType);
-    if(DETERMINE_TYPE_ALONE) getPatchesAloneInSubfolders(ImagesRootPath, imagesType);
+    if(DETERMINE_TYPE_ALONE_SUBFOLDERS) getPatchesAloneInSubfolders(ImagesRootPath, imagesType);
 
     return 0;
 }
