@@ -1,3 +1,10 @@
+# createTSVFromFolder.py
+# Using Python3
+#
+# Author : Rémi Ratajczak
+# Email : remi.ratajczak@gmail.com
+# License : MIT
+
 import os
 import csv
 import argparse

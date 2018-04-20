@@ -1,3 +1,11 @@
+/* getpatchesaloneinsubfolders.hpp
+*
+* Author: Rémi Ratajczak
+* Email : remi.ratajczak@gmail.com
+* LICENSE : MIT
+*
+*/
+
 #pragma once
 
 #include "../headers/headers.hpp"
