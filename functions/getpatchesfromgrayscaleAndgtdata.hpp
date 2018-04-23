@@ -37,8 +37,8 @@ void getPatchesFromGrayscaleAndGTData(std::string grayscaleImagesPath, std::stri
     int maxImgNb = imgGrayPathsVec.size();
     for(auto imgNb = 0; imgNb < maxImgNb; imgNb++)
     {
-        cv::Mat imgGray = cv::imread(imgGrayPathsVec[imgNb], 0);
-        cv::Mat imgGT = cv::imread(imgGTPathsVec[imgNb], 1); //in color
+        cv::Mat imgGray = cv::imread(imgGrayPathsVec[imgNb], CV_LOAD_IMAGE_GRAYSCALE);
+        cv::Mat imgGT = cv::imread(imgGTPathsVec[imgNb], CV_LOAD_IMAGE_COLOR); //in color
         extractPatchesWithGT(imgGray, savePathGray, grayscaleImagesType,
                              imgGT, savePathGT, groundTruthImagesType,
                              ExtractWithGTModes::AllPixel,
