@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project( ExtractPatchesForRecolorization )
+project( ExtractPatches )
 
 SET(CMAKE_CXX_FLAGS "-std=c++11")
 
@@ -14,16 +14,16 @@ file(GLOB SRC
 )
 
 
-add_executable( ExtractPatchesForRecolorization
+add_executable( ExtractPatches
 		${SRC})
 
 
-target_link_libraries( ExtractPatchesForRecolorization
+target_link_libraries( ExtractPatches
 		       ${OpenCV_LIBS} )
 
 #You may want to change this for you own purpose
-add_custom_command(TARGET ExtractPatchesForRecolorization POST_BUILD
+add_custom_command(TARGET ExtractPatches POST_BUILD
 COMMAND ${CMAKE_COMMAND} -E copy_directory
 "D:/lib/opencv/build/x64/vs2017/install/x64/vc15/bin/"
-"$<TARGET_FILE_DIR:ExtractPatchesForRecolorization>"
+"$<TARGET_FILE_DIR:ExtractPatches>"
 )
