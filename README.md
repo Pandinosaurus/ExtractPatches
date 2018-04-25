@@ -20,11 +20,9 @@ A simple C++ utility to automatically extract color and grayscale patches. Initi
 
 ## To Do
 - Add an easy to use CLI for the patch extractor
-- Allow user to extract only color patches instead of [color + calculated grayscale versions]
 - Allow user to extract random patches
 - Allow user to extract only 1 patch
 - Allow user to extract from a given coordinate
 - Allow user to extract to a given coordinate
 - Allow user to extract multiscale patches (mutliscale)
 - Allow user to extract a pyramid of patches (mutliresolution)
-- Simplify usage?
