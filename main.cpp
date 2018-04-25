@@ -1,6 +1,6 @@
 /* main.cpp
  * 
- * Author: Rémi Ratajczak
+ * Author: RÃ©mi Ratajczak
  * Email : remi.ratajczak@gmail.com
  * LICENSE : MIT
  *
@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     std::string colorGtPath = "../data/inputColorGt/";
     std::string ImagesRootPath = "../../../datasets/";
 
-	if(GRAY_DATA) getPatchesFromGrayscaleData(grayscaleImagesPath, imagesType);
-	if(COLOR_DATA) getPatchesFromColorData(colorImagesPath, imagesType);
+    if(GRAY_DATA) getPatchesFromGrayscaleData(grayscaleImagesPath, imagesType);
+    if(COLOR_DATA) getPatchesFromColorData(colorImagesPath, imagesType);
     if(GRAY_WITHCOLORGT_DATA) getPatchesFromGrayscaleAndGTData(grayscaleImagesPath, imagesType, colorGtPath, imagesType);
     if(DETERMINE_TYPE_ALONE_SUBFOLDERS) getPatchesAloneInSubfolders(ImagesRootPath, imagesType);
 
