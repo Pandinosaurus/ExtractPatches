@@ -1,5 +1,5 @@
 # ExtractPatches
-A simple C++ utility to automatically extract color and grayscale patches. Initiated for pairwise and unpaired colorization tasks.
+A simple C++ utility to automatically extract color and grayscale patches. 
 
 ## What you should do
 - Create a data folder containing the images you would like to use (i.e. 1 folder for color images, 1 folder for grayscale images)
