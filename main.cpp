@@ -14,16 +14,10 @@
 
 int main(int argc, char *argv[])
 {
-    std::string imagesType = "jpg";
-    std::string colorImagesPath = "../data/inputColor/";
-    std::string grayscaleImagesPath = "../data/inputGray/";
-    std::string colorGtPath = "../data/inputColorGt/";
-    std::string ImagesRootPath = "../../../datasets/";
-
-    if(GRAY_DATA) getPatchesFromGrayscaleData(grayscaleImagesPath, imagesType);
-    if(COLOR_DATA) getPatchesFromColorData(colorImagesPath, imagesType);
-    if(GRAY_WITHCOLORGT_DATA) getPatchesFromGrayscaleAndGTData(grayscaleImagesPath, imagesType, colorGtPath, imagesType);
-    if(DETERMINE_TYPE_ALONE_SUBFOLDERS) getPatchesAloneInSubfolders(ImagesRootPath, imagesType);
+    if(GRAY_DATA) getPatchesFromGrayscaleData(grayscaleImagesPath, READ_TYPE);
+    if(COLOR_DATA) getPatchesFromColorData(colorImagesPath, READ_TYPE);
+    if(GRAY_WITHCOLORGT_DATA) getPatchesFromGrayscaleAndGTData(grayscaleImagesPath, READ_TYPE, colorGtPath, READ_TYPE);
+    if(DETERMINE_TYPE_ALONE_SUBFOLDERS) getPatchesAloneInSubfolders(ImagesRootPath, READ_TYPE);
 
     return 0;
 }

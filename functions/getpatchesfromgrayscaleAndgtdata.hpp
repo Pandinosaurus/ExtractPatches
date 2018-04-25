@@ -13,7 +13,7 @@
 #include "extractpatches.hpp"
 
 void getPatchesFromGrayscaleAndGTData(std::string grayscaleImagesPath, std::string grayscaleImagesType,
-                                 std::string groundTruthImagesPath, std::string groundTruthImagesType)
+                                      std::string groundTruthImagesPath, std::string groundTruthImagesType)
 {
     //Get directories
     auto savePathGray = "../data/outputGrayGTGray";
