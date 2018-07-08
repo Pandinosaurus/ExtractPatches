@@ -15,7 +15,7 @@ A simple C++ utility to automatically extract color and grayscale patches.
 
 ## Optional
  - A TSV writter for your files - it requires Python 3 with "csv", "os" and "argparse" packages
- This could be especially useful in combination with a this scripts for visualization :
+ This could be especially useful in combination with these scripts for visualization :
  https://github.com/Pandinosaurus/tSNE-Image-Similarity-Clustering
 
 ## To Do
